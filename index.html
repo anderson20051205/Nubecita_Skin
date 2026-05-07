@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud Skin | Suavidad que acaricia tu piel</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        nube: {
+                            pink: '#FDE2E4',
+                            lilac: '#E2E2FD',
+                            blue: '#E2F0FD',
+                            dark: '#4A4A4A'
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['Poppins', 'sans-serif'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-delayed': 'float 6s ease-in-out infinite 3s',
+                        'fade-in-up': 'fadeInUp 1s ease-out forwards',
+                        'crossfade': 'crossfade 15s infinite ease-in-out',
+                        'spin-slow': 'spin 20s linear infinite',
+                        'pop-out': 'popOut 3.5s ease-in-out forwards',
+                        'sparkle': 'sparkle 0.8s infinite alternate ease-in-out',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        crossfade: {
+                            '0%, 20%': { opacity: '1', transform: 'scale(1)' },
+                            '26%, 94%': { opacity: '0', transform: 'scale(1.1)' },
+                            '100%': { opacity: '1', transform: 'scale(1)' },
+                        },
+                        popOut: {
+                            '0%': { transform: 'scale(0.5) translateY(100px)', opacity: '0' },
+                            '10%': { transform: 'scale(1.8) translateY(-20px)', opacity: '1' },
+                            '15%': { transform: 'scale(1.6) translateY(0)', opacity: '1' },
+                            '85%': { transform: 'scale(1.7) translateY(-5px)', opacity: '1' },
+                            '100%': { transform: 'scale(2.5) translateY(-50px)', opacity: '0' }
+                        },
+                        sparkle: {
+                            '0%': { transform: 'scale(0.5)', opacity: '0.2' },
+                            '100%': { transform: 'scale(1.5) rotate(45deg)', opacity: '1' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #FFFDFD 0%, #FDE2E4 50%, #E2F0FD 100%);
+            color: #4A4A4A;
+            overflow-x: hidden;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 8px 32px 0 rgba(226, 226, 253, 0.37);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px 0 rgba(226, 226, 253, 0.5);
+        }
+
+        /* Custom scrollbar for carousels */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .cloud-shape {
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+        }
+    </style>
+</head>
+
+<body class="font-sans antialiased text-nube-dark min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="fixed w-full z-50 glass transition-all duration-300" id="header">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="#" class="flex items-center gap-2">
+                <i class="fa-solid fa-cloud text-nube-blue text-2xl"></i>
+                <span class="font-serif font-bold text-2xl text-nube-dark">Nubecita Skin</span>
+            </a>
+
+            <nav class="hidden md:flex items-center gap-8 font-medium">
+                <a href="#inicio" class="hover:text-pink-400 transition-colors">Inicio</a>
+                <a href="#productos" class="hover:text-pink-400 transition-colors">Productos</a>
+                <a href="#juego" class="hover:text-pink-400 transition-colors">Juego</a>
+                <a href="#nosotros" class="hover:text-pink-400 transition-colors">Nosotros</a>
+                <a href="#contacto" class="hover:text-pink-400 transition-colors">Contacto</a>
+            </nav>
+
+            <button class="relative p-2" onclick="toggleCart()">
+                <i class="fa-solid fa-shopping-cart text-xl hover:text-pink-400 transition-colors"></i>
+                <span id="cart-count"
+                    class="absolute top-0 right-0 bg-pink-400 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center transform scale-0 transition-transform">0</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="inicio" class="pt-32 pb-20 min-h-screen flex items-center relative overflow-hidden">
+        <div class="absolute top-20 left-10 text-nube-blue opacity-50 text-6xl animate-float"><i
+                class="fa-solid fa-cloud"></i></div>
+        <div class="absolute bottom-20 right-20 text-nube-pink opacity-50 text-8xl animate-float-delayed"><i
+                class="fa-solid fa-cloud"></i></div>
+
+        <div class="container mx-auto px-4 grid md:grid-cols-2 gap-12 items-center relative z-10">
+            <div class="space-y-6 animate-fade-in-up">
+                <h1 class="font-serif text-5xl md:text-7xl font-bold leading-tight">
+                    Suavidad que <br> acaricia tu <span class="text-pink-400">piel</span>
+                </h1>
+                <p class="text-lg md:text-xl text-gray-600 max-w-lg">
+                    Descubre nuestras cremas corporales artesanales tipo mantequilla. Hechas con amor e ingredientes
+                    naturales para brindarte una hidratación profunda y aromas de ensueño.
+                </p>
+                <div class="pt-4">
+                    <a href="#productos"
+                        class="inline-block bg-white/80 backdrop-blur text-nube-dark border-2 border-pink-200 px-8 py-4 rounded-full font-semibold hover:bg-pink-50 hover:border-pink-300 transition-all shadow-sm">
+                        <i class="fa-solid fa-sparkles mr-2 text-pink-400"></i> Ver Productos
+                    </a>
+                </div>
+            </div>
+            <div class="relative animate-fade-in-up" style="animation-delay: 0.2s;">
+                <!-- Decorative Elements -->
+                <div
+                    class="absolute -inset-4 bg-gradient-to-r from-pink-300 to-blue-300 rounded-full blur-3xl opacity-30 animate-pulse">
+                </div>
+                <div class="absolute -inset-10 border border-pink-200/50 rounded-full animate-spin-slow"></div>
+
+                <div
+                    class="w-full aspect-square bg-white/20 backdrop-blur-xl cloud-shape shadow-2xl relative overflow-hidden flex items-center justify-center border border-white/50 group">
+
+                    <!-- Fading Images Container -->
+                    <div class="absolute inset-0 w-full h-full">
+                        <img src="images/nube_vainilla.jpeg"
+                            class="absolute inset-0 w-full h-full object-cover animate-crossfade"
+                            style="animation-delay: 0s;" alt="Nube de Vainilla">
+                        <img src="images/nube_rosas.jpeg"
+                            class="absolute inset-0 w-full h-full object-cover animate-crossfade"
+                            style="animation-delay: 5s;" alt="Nube de Rosas">
+                        <img src="images/set_nubecita.jpeg"
+                            class="absolute inset-0 w-full h-full object-cover animate-crossfade"
+                            style="animation-delay: 10s;" alt="Set Nubecita Especial">
+                    </div>
+
+                    <!-- Glass Overlay that appears on hover -->
+                    <div
+                        class="absolute inset-0 bg-white/30 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col items-center justify-center text-center p-8">
+                        <i class="fa-solid fa-spa text-5xl text-pink-500 mb-4 animate-bounce"></i>
+                        <h3 class="font-serif text-3xl font-bold text-nube-dark drop-shadow-md">Artesanal & Natural</h3>
+                        <p class="text-sm font-medium mt-2 text-nube-dark/80">Hecho con amor en Ecuador</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Productos Section -->
+    <section id="productos" class="py-20 relative">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16 animate-fade-in-up">
+                <h2 class="font-serif text-4xl font-bold mb-4">Nuestras Nubes</h2>
+                <div class="w-24 h-1 bg-pink-200 mx-auto rounded-full"></div>
+            </div>
+
+            <!-- Carrusel de Productos -->
+            <div class="relative max-w-6xl mx-auto group">
+                <div class="overflow-hidden">
+                    <div id="product-track" class="flex transition-transform duration-500 ease-out">
+                        <!-- Products will be injected here -->
+                    </div>
+                </div>
+
+                <!-- Controles -->
+                <button onclick="prevProduct()"
+                    class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 w-12 h-12 rounded-full glass flex items-center justify-center text-nube-dark hover:text-pink-500 opacity-0 group-hover:opacity-100 transition-opacity z-10">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+                <button onclick="nextProduct()"
+                    class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-12 h-12 rounded-full glass flex items-center justify-center text-nube-dark hover:text-pink-500 opacity-0 group-hover:opacity-100 transition-opacity z-10">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+
+                <!-- Dots -->
+                <div id="product-dots" class="flex justify-center gap-2 mt-8"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mini Juego Section -->
+    <section id="juego" class="py-20 relative overflow-hidden">
+        <div class="absolute -left-20 top-40 text-nube-blue opacity-30 text-9xl animate-float"><i
+                class="fa-solid fa-cloud"></i></div>
+        <div class="absolute right-0 bottom-10 text-nube-pink opacity-30 text-8xl animate-float-delayed"><i
+                class="fa-solid fa-cloud"></i></div>
+
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="text-center mb-12 animate-fade-in-up">
+                <h2 class="font-serif text-4xl font-bold mb-4">¡Crea tu propia Nubecita!</h2>
+                <div class="w-24 h-1 bg-pink-200 mx-auto rounded-full mb-6"></div>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">Personaliza tu propio frasco. Elige tus colores
+                    favoritos y dale un nombre especial a tu creación.</p>
+            </div>
+
+            <div
+                class="max-w-5xl mx-auto glass rounded-3xl p-8 md:p-12 shadow-xl flex flex-col md:flex-row gap-12 items-center">
+
+                <!-- SVG Preview -->
+                <div class="w-full md:w-1/2 flex justify-center">
+                    <svg viewBox="0 0 200 250"
+                        class="w-64 h-80 drop-shadow-2xl transition-transform duration-500 hover:scale-105">
+                        <!-- Shadow base -->
+                        <ellipse cx="100" cy="240" rx="60" ry="8" fill="rgba(0,0,0,0.1)" />
+                        <!-- Jar Base / Cream -->
+                        <path id="svg-cream" fill="#FDE2E4"
+                            d="M30,100 L170,100 C180,100 190,110 190,130 L190,210 C190,230 180,240 160,240 L40,240 C20,240 10,230 10,210 L10,130 C10,110 20,100 30,100 Z"
+                            class="transition-colors duration-500" />
+                        <!-- Jar Glass Outline -->
+                        <path fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="6"
+                            d="M30,100 L170,100 C180,100 190,110 190,130 L190,210 C190,230 180,240 160,240 L40,240 C20,240 10,230 10,210 L10,130 C10,110 20,100 30,100 Z" />
+                        <!-- Lid -->
+                        <path id="svg-lid" fill="#E2E2FD"
+                            d="M25,60 L175,60 C185,60 190,70 190,80 L190,95 C190,105 185,110 175,110 L25,110 C15,110 10,105 10,95 L10,80 C10,70 15,60 25,60 Z"
+                            class="transition-colors duration-500" />
+                        <!-- Lid highlight -->
+                        <rect x="30" y="65" width="140" height="8" fill="rgba(255,255,255,0.4)" rx="4" />
+                        <!-- Label -->
+                        <rect x="50" y="140" width="100" height="60" fill="white" rx="8" class="shadow-md"
+                            stroke="#f0f0f0" stroke-width="2" />
+                        <!-- Cute Cloud on Label -->
+                        <path fill="#FDE2E4" id="svg-label-icon"
+                            d="M100,148 C97,148 95,150 95,153 C95,153 93,152 91,152 C88,152 86,154 86,157 C86,160 88,162 91,162 L109,162 C112,162 114,160 114,157 C114,154 112,152 109,152 C107,152 105,153 105,153 C105,150 103,148 100,148 Z"
+                            class="transition-colors duration-500" />
+                        <!-- Text -->
+                        <text id="svg-name" x="100" y="176" font-family="'Playfair Display', serif" font-size="16"
+                            font-weight="bold" fill="#4A4A4A" text-anchor="middle">Mi Nube</text>
+                        <text x="100" y="190" font-family="'Poppins', sans-serif" font-size="8" fill="#888"
+                            text-anchor="middle" font-weight="600" letter-spacing="1">EDICIÓN ESPECIAL</text>
+                    </svg>
+                </div>
+
+                <!-- Controls -->
+                <div class="w-full md:w-1/2 space-y-8">
+                    <div>
+                        <label class="block font-serif text-xl font-bold mb-3">1. Color de la Crema</label>
+                        <div class="flex gap-3 flex-wrap">
+                            <button onclick="setCreamColor('#FDE2E4')"
+                                class="w-10 h-10 rounded-full bg-[#FDE2E4] border-2 border-white shadow-md hover:scale-110 transition-transform focus:ring-2 focus:ring-pink-300"></button>
+                            <button onclick="setCreamColor('#E2E2FD')"
+                                class="w-10 h-10 rounded-full bg-[#E2E2FD] border-2 border-white shadow-md hover:scale-110 transition-transform focus:ring-2 focus:ring-purple-300"></button>
+                            <button onclick="setCreamColor('#E2F0FD')"
+                                class="w-10 h-10 rounded-full bg-[#E2F0FD] border-2 border-white shadow-md hover:scale-110 transition-transform focus:ring-2 focus:ring-blue-300"></button>
+                            <button onclick="setCreamColor('#D5ECD4')"
+                                class="w-10 h-10 rounded-full bg-[#D5ECD4] border-2 border-white shadow-md hover:scale-110 transition-transform focus:ring-2 focus:ring-green-300"></button>
+                            <button onclick="setCreamColor('#FFFDFD')"
+                                class="w-10 h-10 rounded-full bg-[#FFFDFD] border-2 border-white shadow-md hover:scale-110 transition-transform focus:ring-2 focus:ring-gray-300"></button>
+                            <button onclick="setCreamColor('#FDF3E2')"
+                                class="w-10 h-10 rounded-full bg-[#FDF3E2] border-2 border-white shadow-md hover:scale-110 transition-transform focus:ring-2 focus:ring-orange-300"></button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block font-serif text-xl font-bold mb-3">2. Color de la Tapa</label>
+                        <div class="flex gap-3 flex-wrap">
+                            <button onclick="setLidColor('#E2E2FD')"
+                                class="w-10 h-10 rounded-full bg-[#E2E2FD] border-2 border-white shadow-md hover:scale-110 transition-transform focus:ring-2 focus:ring-purple-300"></button>
+                            <button onclick="setLidColor('#FDE2E4')"
+                                class="w-10 h-10 rounded-full bg-[#FDE2E4] border-2 border-white shadow-md hover:scale-110 transition-transform focus:ring-2 focus:ring-pink-300"></button>
+                            <button onclick="setLidColor('#E2F0FD')"
+                                class="w-10 h-10 rounded-full bg-[#E2F0FD] border-2 border-white shadow-md hover:scale-110 transition-transform focus:ring-2 focus:ring-blue-300"></button>
+                            <button onclick="setLidColor('#FFD700')"
+                                class="w-10 h-10 rounded-full bg-[#FFD700] border-2 border-white shadow-md hover:scale-110 transition-transform focus:ring-2 focus:ring-yellow-300"></button>
+                            <button onclick="setLidColor('#DCDCDC')"
+                                class="w-10 h-10 rounded-full bg-[#DCDCDC] border-2 border-white shadow-md hover:scale-110 transition-transform focus:ring-2 focus:ring-gray-300"></button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block font-serif text-xl font-bold mb-3">3. Nombra tu Crema</label>
+                        <input type="text" id="custom-name-input" onkeyup="updateName(this.value)" maxlength="15"
+                            placeholder="Ej. Magia Pura"
+                            class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-pink-300 focus:ring-2 focus:ring-pink-100 outline-none transition-all bg-white/70 font-serif text-lg shadow-sm">
+                    </div>
+
+                    <div class="pt-4">
+                        <button onclick="saveDesign()"
+                            class="relative w-full overflow-hidden bg-gradient-to-r from-pink-400 to-purple-400 text-white py-4 rounded-full font-bold hover:from-pink-500 hover:to-purple-500 transition-all shadow-lg hover:shadow-[0_10px_30px_rgba(236,72,153,0.4)] transform hover:-translate-y-1 flex items-center justify-center gap-3 group">
+                            <div
+                                class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                            </div>
+                            <i class="fa-solid fa-wand-magic-sparkles text-xl group-hover:animate-bounce"></i>
+                            <span class="text-lg tracking-wide">CREAR MI NUBE</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Nosotros Section -->
+    <section id="nosotros" class="py-20 bg-white/40">
+        <div class="container mx-auto px-4">
+            <!-- Carrusel Nosotros -->
+            <div class="max-w-4xl mx-auto glass rounded-3xl p-8 md:p-12 relative overflow-hidden">
+                <div class="absolute -top-10 -right-10 text-nube-pink opacity-30 text-9xl"><i
+                        class="fa-solid fa-cloud"></i></div>
+
+                <div id="about-track" class="flex transition-transform duration-700 ease-in-out">
+                    <!-- Slide 1 -->
+                    <div class="w-full flex-shrink-0 px-4 text-center">
+                        <i class="fa-solid fa-heart text-4xl text-pink-400 mb-6"></i>
+                        <h3 class="font-serif text-3xl font-bold mb-4">Nuestra Historia</h3>
+                        <p class="text-lg text-gray-600">Nubecita Skin nació del deseo de crear productos que no solo
+                            hidraten, sino que ofrezcan una experiencia sensorial completa. Cada crema está elaborada
+                            artesanalmente con dedicación.</p>
+                    </div>
+                    <!-- Slide 2 -->
+                    <div class="w-full flex-shrink-0 px-4 text-center">
+                        <i class="fa-solid fa-leaf text-4xl text-green-400 mb-6"></i>
+                        <h3 class="font-serif text-3xl font-bold mb-4">Ingredientes Naturales</h3>
+                        <p class="text-lg text-gray-600">Seleccionamos cuidadosamente mantecas vegetales y aceites
+                            esenciales de la más alta calidad, libres de crueldad animal y químicos agresivos para tu
+                            piel.</p>
+                    </div>
+                    <!-- Slide 3 -->
+                    <div class="w-full flex-shrink-0 px-4 text-center">
+                        <i class="fa-solid fa-spa text-4xl text-nube-blue mb-6"></i>
+                        <h3 class="font-serif text-3xl font-bold mb-4">Experiencia Única</h3>
+                        <p class="text-lg text-gray-600">Nuestras texturas tipo mantequilla se funden al contacto con tu
+                            piel, ofreciendo una suavidad inigualable que perdura durante todo el día.</p>
+                    </div>
+                    <!-- Slide 4 -->
+                    <div class="w-full flex-shrink-0 px-4 text-center">
+                        <i class="fa-solid fa-earth-americas text-4xl text-nube-lilac mb-6"></i>
+                        <h3 class="font-serif text-3xl font-bold mb-4">Compromiso Ambiental</h3>
+                        <p class="text-lg text-gray-600">Utilizamos envases reutilizables y empaques ecológicos porque
+                            cuidar tu piel no debe estar peleado con cuidar nuestro planeta.</p>
+                    </div>
+                </div>
+
+                <div id="about-dots" class="flex justify-center gap-2 mt-10"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contacto Section -->
+    <section id="contacto" class="py-20">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="font-serif text-4xl font-bold mb-4">Conéctate con Nosotros</h2>
+                <div class="w-24 h-1 bg-pink-200 mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <a href="https://www.instagram.com/nubecita_skin?igsh=MXZ1OTIzaHZleTF2dg==" target="_blank"
+                    class="glass glass-card rounded-2xl p-8 text-center transition-all">
+                    <div
+                        class="w-16 h-16 bg-gradient-to-tr from-pink-400 to-purple-500 text-white rounded-full flex items-center justify-center mx-auto mb-4 text-2xl shadow-lg">
+                        <i class="fa-brands fa-instagram"></i>
+                    </div>
+                    <h4 class="font-bold text-xl mb-2">Instagram</h4>
+                    <p class="text-gray-500">@nubecita_skin</p>
+                </a>
+
+                <a href="https://wa.me/593990077054" target="_blank"
+                    class="glass glass-card rounded-2xl p-8 text-center transition-all">
+                    <div
+                        class="w-16 h-16 bg-green-400 text-white rounded-full flex items-center justify-center mx-auto mb-4 text-2xl shadow-lg">
+                        <i class="fa-brands fa-whatsapp"></i>
+                    </div>
+                    <h4 class="font-bold text-xl mb-2">WhatsApp</h4>
+                    <p class="text-gray-500">+593 99 007 7054</p>
+                </a>
+
+                <div class="glass glass-card rounded-2xl p-8 text-center transition-all">
+                    <div
+                        class="w-16 h-16 bg-nube-blue text-nube-dark rounded-full flex items-center justify-center mx-auto mb-4 text-2xl shadow-lg">
+                        <i class="fa-solid fa-location-dot"></i>
+                    </div>
+                    <h4 class="font-bold text-xl mb-2">Ubicación</h4>
+                    <p class="text-gray-500">Envíos a todo Ecuador</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="mt-auto py-8 bg-white/50 border-t border-white">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-gray-500 font-medium">&copy; <span id="year"></span> Nubecita Skin. Todos los derechos
+                reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Cart Overlay & Sidebar -->
+    <div id="cart-overlay" class="fixed inset-0 bg-black/20 backdrop-blur-sm z-[60] hidden transition-opacity"
+        onclick="toggleCart()"></div>
+    <div id="cart-sidebar"
+        class="fixed top-0 right-0 h-full w-full sm:w-96 glass bg-white/80 z-[70] transform translate-x-full transition-transform duration-300 flex flex-col">
+        <div class="p-6 border-b border-white flex justify-between items-center">
+            <h3 class="font-serif text-2xl font-bold"><i class="fa-solid fa-shopping-cart mr-2"></i> Tu Carrito</h3>
+            <button onclick="toggleCart()" class="text-gray-500 hover:text-pink-500 text-xl"><i
+                    class="fa-solid fa-times"></i></button>
+        </div>
+
+        <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-4">
+            <!-- Items del carrito -->
+            <p class="text-center text-gray-400 mt-10">Tu carrito está vacío</p>
+        </div>
+
+        <div class="p-6 border-t border-white bg-white/50">
+            <div class="flex justify-between items-center mb-4 font-bold text-xl">
+                <span>Total:</span>
+                <span id="cart-total">$0.00</span>
+            </div>
+            <button onclick="openCheckout()"
+                class="w-full bg-nube-dark text-white py-3 rounded-full font-semibold hover:bg-gray-800 transition-colors disabled:opacity-50"
+                id="btn-checkout" disabled>
+                Proceder al Pago
+            </button>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div id="checkout-modal"
+        class="fixed inset-0 bg-black/40 backdrop-blur-sm z-[80] hidden flex items-center justify-center p-4">
+        <div
+            class="glass bg-white/90 w-full max-w-lg rounded-3xl p-8 max-h-[90vh] overflow-y-auto relative animate-fade-in-up">
+            <button onclick="closeCheckout()" class="absolute top-6 right-6 text-gray-400 hover:text-gray-800"><i
+                    class="fa-solid fa-times text-xl"></i></button>
+
+            <h3 class="font-serif text-3xl font-bold mb-6 text-center">Detalles de Envío</h3>
+
+            <form id="checkout-form" onsubmit="processOrder(event)" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium mb-1">Nombre Completo</label>
+                    <input type="text" id="c_name" required
+                        class="w-full px-4 py-2 rounded-xl border border-gray-200 focus:border-pink-300 focus:ring-2 focus:ring-pink-100 outline-none transition-all bg-white/50">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Teléfono</label>
+                        <input type="tel" id="c_phone" required
+                            class="w-full px-4 py-2 rounded-xl border border-gray-200 focus:border-pink-300 focus:ring-2 focus:ring-pink-100 outline-none transition-all bg-white/50">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Correo Electrónico</label>
+                        <input type="email" id="c_email" required
+                            class="w-full px-4 py-2 rounded-xl border border-gray-200 focus:border-pink-300 focus:ring-2 focus:ring-pink-100 outline-none transition-all bg-white/50">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-1">Dirección de Envío Exacta</label>
+                    <textarea id="c_address" required rows="2"
+                        class="w-full px-4 py-2 rounded-xl border border-gray-200 focus:border-pink-300 focus:ring-2 focus:ring-pink-100 outline-none transition-all bg-white/50"></textarea>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-1">Método de Pago</label>
+                    <select id="c_payment" required
+                        class="w-full px-4 py-2 rounded-xl border border-gray-200 focus:border-pink-300 focus:ring-2 focus:ring-pink-100 outline-none transition-all bg-white/50">
+                        <option value="Transferencia Bancaria">Transferencia Bancaria</option>
+                        <option value="Efectivo Contra Entrega">Efectivo (Contra Entrega)</option>
+                    </select>
+                </div>
+
+                <div class="pt-4">
+                    <button type="submit"
+                        class="w-full bg-green-500 text-white py-3 rounded-full font-semibold hover:bg-green-600 transition-colors flex justify-center items-center gap-2">
+                        <i class="fa-brands fa-whatsapp text-xl"></i> Confirmar Pedido
+                    </button>
+                    <p class="text-xs text-center text-gray-500 mt-2">Serás redirigido a WhatsApp para coordinar el pago
+                        y envío.</p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // --- Estado de la App ---
+        let products = [];
+        let cart = [];
+
+        // --- Fetch Productos ---
+        async function loadProducts() {
+            // Static products instead of backend
+            products = [
+                {
+                    id: 1,
+                    name: "Nube de Vainilla",
+                    description: "Crema corporal artesanal tipo mantequilla con un dulce y suave aroma a vainilla.",
+                    price: 12.50,
+                    aroma: "Vainilla Dulce",
+                    image_url: "images/nube_vainilla.jpeg"
+                },
+                {
+                    id: 2,
+                    name: "Nube de Rosas",
+                    description: "Nuestra crema más romántica, hidratación profunda con un toque floral.",
+                    price: 14.00,
+                    aroma: "Rosas Frescas",
+                    image_url: "images/nube_rosas.jpeg"
+                },
+                {
+                    id: 3,
+                    name: "Nube de Coco",
+                    description: "Te transportará a la playa. Textura rica y nutritiva para piel seca.",
+                    price: 13.00,
+                    aroma: "Coco Tropical",
+                    image_url: "images/nube_coco.jpeg"
+                },
+                {
+                    id: 4,
+                    name: "Nube de Lavanda",
+                    description: "Relajante y calmante, ideal para aplicar antes de dormir.",
+                    price: 13.50,
+                    aroma: "Lavanda Relajante",
+                    image_url: "images/nube_lavanda.jpeg"
+                },
+                {
+                    id: 5,
+                    name: "Set Nubecita Especial",
+                    description: "Regala la magia de Nubecita. Incluye tus cremas favoritas y accesorios exclusivos.",
+                    price: 25.00,
+                    aroma: "Mix Especial",
+                    image_url: "images/set_nubecita.jpeg"
+                }
+            ];
+            renderProductCarousel();
+        }
+
+        // --- Render Carrusel Productos ---
+        function renderProductCarousel() {
+            const track = document.getElementById('product-track');
+            const dotsContainer = document.getElementById('product-dots');
+            track.innerHTML = '';
+            dotsContainer.innerHTML = '';
+
+            products.forEach((p, index) => {
+                const isGroupStart = index % getItemsPerSlide() === 0;
+                if (isGroupStart) {
+                    const dotIndex = Math.floor(index / getItemsPerSlide());
+                    dotsContainer.innerHTML += `<button onclick="goToSlide(${dotIndex})" class="w-2 h-2 rounded-full transition-all duration-300 ${dotIndex === 0 ? 'bg-pink-400 w-6' : 'bg-pink-200'} prod-dot" data-index="${dotIndex}"></button>`;
+                }
+
+                track.innerHTML += `
+                    <div class="w-full sm:w-1/2 md:w-1/3 flex-shrink-0 px-4 py-6">
+                        <div class="glass glass-card rounded-3xl p-6 h-full flex flex-col relative group overflow-hidden">
+                            <div class="absolute top-4 right-4 bg-white/80 px-3 py-1 rounded-full text-xs font-bold text-nube-dark shadow-sm">
+                                $${p.price.toFixed(2)}
+                            </div>
+                            <div class="aspect-square mb-6 rounded-2xl overflow-hidden bg-white/50 flex items-center justify-center p-4">
+                                <img src="${p.image_url}" alt="${p.name}" class="w-full h-full object-cover rounded-xl shadow-sm group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://via.placeholder.com/300?text=${encodeURIComponent(p.name)}'">
+                            </div>
+                            <h3 class="font-serif text-2xl font-bold mb-2">${p.name}</h3>
+                            <p class="text-sm text-gray-500 mb-4 flex-1">${p.description}</p>
+                            ${p.aroma ? `<p class="text-xs text-pink-400 mb-4 font-medium"><i class="fa-solid fa-wind mr-1"></i> ${p.aroma}</p>` : '<div class="mb-4"></div>'}
+                            <button onclick="addToCart(${p.id})" class="w-full bg-white/80 border border-pink-200 hover:bg-pink-100 text-nube-dark py-2 rounded-full font-medium transition-colors shadow-sm flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-cart-plus"></i> Agregar
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            updateProductCarousel();
+        }
+
+        // --- Lógica Carrusel Productos ---
+        let currentSlide = 0;
+        let autoplayInterval;
+
+        function getItemsPerSlide() {
+            if (window.innerWidth < 640) return 1;
+            if (window.innerWidth < 768) return 2;
+            return 3;
+        }
+
+        function maxSlides() {
+            return Math.ceil(products.length / getItemsPerSlide()) - 1;
+        }
+
+        function updateProductCarousel() {
+            const track = document.getElementById('product-track');
+            const itemWidth = 100 / getItemsPerSlide();
+            const movePercentage = currentSlide * itemWidth * getItemsPerSlide();
+            track.style.transform = `translateX(-${movePercentage}%)`;
+
+            document.querySelectorAll('.prod-dot').forEach(dot => {
+                if (parseInt(dot.dataset.index) === currentSlide) {
+                    dot.classList.remove('bg-pink-200', 'w-2');
+                    dot.classList.add('bg-pink-400', 'w-6');
+                } else {
+                    dot.classList.add('bg-pink-200', 'w-2');
+                    dot.classList.remove('bg-pink-400', 'w-6');
+                }
+            });
+        }
+
+        function nextProduct() {
+            currentSlide = currentSlide >= maxSlides() ? 0 : currentSlide + 1;
+            updateProductCarousel();
+            resetAutoplay();
+        }
+
+        function prevProduct() {
+            currentSlide = currentSlide <= 0 ? maxSlides() : currentSlide - 1;
+            updateProductCarousel();
+            resetAutoplay();
+        }
+
+        function goToSlide(index) {
+            currentSlide = index;
+            updateProductCarousel();
+            resetAutoplay();
+        }
+
+        function resetAutoplay() {
+            clearInterval(autoplayInterval);
+            autoplayInterval = setInterval(nextProduct, 5000);
+        }
+
+        window.addEventListener('resize', () => {
+            currentSlide = 0;
+            renderProductCarousel();
+        });
+
+        // --- Lógica Carrusel Nosotros ---
+        let currentAboutSlide = 0;
+        let aboutInterval;
+
+        function updateAboutCarousel() {
+            const track = document.getElementById('about-track');
+            track.style.transform = `translateX(-${currentAboutSlide * 100}%)`;
+
+            document.querySelectorAll('.about-dot').forEach(dot => {
+                if (parseInt(dot.dataset.index) === currentAboutSlide) {
+                    dot.classList.remove('bg-gray-300', 'w-2');
+                    dot.classList.add('bg-nube-dark', 'w-6');
+                } else {
+                    dot.classList.add('bg-gray-300', 'w-2');
+                    dot.classList.remove('bg-nube-dark', 'w-6');
+                }
+            });
+        }
+
+        function nextAbout() {
+            currentAboutSlide = currentAboutSlide >= 3 ? 0 : currentAboutSlide + 1;
+            updateAboutCarousel();
+        }
+
+        function initAboutCarousel() {
+            const dotsContainer = document.getElementById('about-dots');
+            for (let i = 0; i < 4; i++) {
+                dotsContainer.innerHTML += `<button onclick="currentAboutSlide=${i}; updateAboutCarousel();" class="about-dot w-2 h-2 rounded-full transition-all duration-300 ${i === 0 ? 'bg-nube-dark w-6' : 'bg-gray-300'}" data-index="${i}"></button>`;
+            }
+            aboutInterval = setInterval(nextAbout, 6000);
+        }
+
+
+        // --- Carrito ---
+        function toggleCart() {
+            const sidebar = document.getElementById('cart-sidebar');
+            const overlay = document.getElementById('cart-overlay');
+
+            if (sidebar.classList.contains('translate-x-full')) {
+                sidebar.classList.remove('translate-x-full');
+                overlay.classList.remove('hidden');
+                setTimeout(() => overlay.classList.add('opacity-100'), 10);
+            } else {
+                sidebar.classList.add('translate-x-full');
+                overlay.classList.remove('opacity-100');
+                setTimeout(() => overlay.classList.add('hidden'), 300);
+            }
+        }
+
+        function addToCart(id) {
+            const product = products.find(p => p.id === id);
+            if (!product) return;
+
+            const existing = cart.find(item => item.id === id);
+            if (existing) {
+                existing.quantity++;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+
+            updateCartUI();
+
+            // Animación de feedback
+            const cartIcon = document.querySelector('button[onclick="toggleCart()"] i');
+            cartIcon.classList.add('text-pink-500', 'scale-125');
+            setTimeout(() => cartIcon.classList.remove('text-pink-500', 'scale-125'), 300);
+        }
+
+        function removeFromCart(id) {
+            cart = cart.filter(item => item.id !== id);
+            updateCartUI();
+        }
+
+        function changeQuantity(id, delta) {
+            const item = cart.find(i => i.id === id);
+            if (item) {
+                item.quantity += delta;
+                if (item.quantity <= 0) removeFromCart(id);
+                else updateCartUI();
+            }
+        }
+
+        function updateCartUI() {
+            const count = cart.reduce((acc, item) => acc + item.quantity, 0);
+            const total = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+
+            const badge = document.getElementById('cart-count');
+            badge.textContent = count;
+            if (count > 0) badge.classList.remove('scale-0');
+            else badge.classList.add('scale-0');
+
+            document.getElementById('cart-total').textContent = `$${total.toFixed(2)}`;
+            document.getElementById('btn-checkout').disabled = count === 0;
+
+            const itemsContainer = document.getElementById('cart-items');
+            if (count === 0) {
+                itemsContainer.innerHTML = '<p class="text-center text-gray-400 mt-10">Tu carrito está vacío</p>';
+                return;
+            }
+
+            itemsContainer.innerHTML = cart.map(item => `
+                <div class="flex gap-4 glass p-3 rounded-2xl items-center">
+                    <img src="${item.image_url}" class="w-16 h-16 object-cover rounded-xl bg-white/50" onerror="this.src='https://via.placeholder.com/64'">
+                    <div class="flex-1">
+                        <h4 class="font-bold text-sm line-clamp-1">${item.name}</h4>
+                        <p class="text-pink-500 font-medium text-sm">$${item.price.toFixed(2)}</p>
+                        <div class="flex items-center gap-3 mt-1 bg-white/50 w-max rounded-full px-2 py-0.5">
+                            <button onclick="changeQuantity(${item.id}, -1)" class="text-gray-500 hover:text-pink-500"><i class="fa-solid fa-minus text-xs"></i></button>
+                            <span class="text-sm font-medium w-4 text-center">${item.quantity}</span>
+                            <button onclick="changeQuantity(${item.id}, 1)" class="text-gray-500 hover:text-pink-500"><i class="fa-solid fa-plus text-xs"></i></button>
+                        </div>
+                    </div>
+                    <button onclick="removeFromCart(${item.id})" class="text-gray-300 hover:text-red-400 p-2"><i class="fa-solid fa-trash"></i></button>
+                </div>
+            `).join('');
+        }
+
+        // --- Checkout & WhatsApp ---
+        function openCheckout() {
+            if (cart.length === 0) return;
+            toggleCart();
+            document.getElementById('checkout-modal').classList.remove('hidden');
+        }
+
+        function closeCheckout() {
+            document.getElementById('checkout-modal').classList.add('hidden');
+        }
+
+        function processOrder(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('c_name').value;
+            const phone = document.getElementById('c_phone').value;
+            const email = document.getElementById('c_email').value;
+            const address = document.getElementById('c_address').value;
+            const payment = document.getElementById('c_payment').value;
+
+            const total = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+
+            let message = `*NUEVO PEDIDO - NUBECITA SKIN*\n\n`;
+            message += `*Datos del Cliente:*\n`;
+            message += `Nombre: ${name}\n`;
+            message += `Teléfono: ${phone}\n`;
+            message += `Email: ${email}\n`;
+            message += `Dirección: ${address}\n\n`;
+
+            message += `*Detalle del Pedido:*\n`;
+            cart.forEach(item => {
+                message += `- ${item.quantity}x ${item.name} ($${item.price.toFixed(2)} c/u)\n`;
+            });
+
+            message += `\n*TOTAL A PAGAR:* $${total.toFixed(2)}\n`;
+            message += `*Método de Pago:* ${payment}\n\n`;
+            message += `Gracias por preferir Nubecita Skin.`;
+
+            // Redirigir a WhatsApp
+            const waPhone = "593990077054";
+            const waUrl = `https://wa.me/${waPhone}?text=${encodeURIComponent(message)}`;
+            window.open(waUrl, '_blank');
+
+            // Limpiar
+            cart = [];
+            updateCartUI();
+            closeCheckout();
+            e.target.reset();
+        }
+
+        // --- Lógica Mini Juego ---
+        function setCreamColor(color) {
+            document.getElementById('svg-cream').setAttribute('fill', color);
+            document.getElementById('svg-label-icon').setAttribute('fill', color);
+        }
+
+        function setLidColor(color) {
+            document.getElementById('svg-lid').setAttribute('fill', color);
+        }
+
+        function updateName(val) {
+            const display = val.trim() || 'Mi Nube';
+            document.getElementById('svg-name').textContent = display;
+        }
+
+        function saveDesign() {
+            const btn = document.querySelector('button[onclick="saveDesign()"]');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fa-solid fa-check text-xl"></i> <span class="text-lg tracking-wide">¡NUBE CREADA!</span>';
+            btn.classList.add('from-green-400', 'to-emerald-500', 'shadow-[0_10px_30px_rgba(16,185,129,0.4)]');
+
+            // Crear Overlay interactivo
+            const overlay = document.createElement('div');
+            overlay.className = 'fixed inset-0 bg-white/60 backdrop-blur-md z-[100] flex items-center justify-center transition-opacity duration-300 opacity-0';
+            document.body.appendChild(overlay);
+
+            // Clonar SVG del frasco creado
+            const svgSource = document.querySelector('#juego svg');
+            const svgClone = svgSource.cloneNode(true);
+
+            // Reemplazar clases para animación y brillo impactante
+            svgClone.setAttribute('class', 'w-80 h-96 drop-shadow-[0_30px_60px_rgba(236,72,153,0.6)] animate-pop-out filter contrast-125 saturate-150');
+            overlay.appendChild(svgClone);
+
+            // Agregar destellos alrededor de la nube
+            for (let i = 0; i < 12; i++) {
+                let star = document.createElement('i');
+                const isStar = Math.random() > 0.5;
+                star.className = `fa-solid ${isStar ? 'fa-star text-yellow-300' : 'fa-sparkles text-pink-400'} absolute animate-sparkle drop-shadow-md`;
+                star.style.left = (35 + Math.random() * 30) + '%';
+                star.style.top = (30 + Math.random() * 40) + '%';
+                star.style.fontSize = (Math.random() * 2 + 1.5) + 'rem';
+                star.style.animationDelay = (Math.random() * 0.5) + 's';
+                star.style.animationDuration = (0.5 + Math.random() * 0.5) + 's';
+                overlay.appendChild(star);
+            }
+
+            // Mostrar con transición
+            setTimeout(() => overlay.classList.remove('opacity-0'), 10);
+
+            // Restaurar y limpiar luego de 3.5 segundos
+            setTimeout(() => {
+                overlay.classList.add('opacity-0');
+                btn.innerHTML = originalText;
+                btn.classList.remove('from-green-400', 'to-emerald-500', 'shadow-[0_10px_30px_rgba(16,185,129,0.4)]');
+                setTimeout(() => overlay.remove(), 300); // Dar tiempo al fadeOut del overlay
+            }, 3500);
+        }
+
+        // --- Init ---
+        document.addEventListener('DOMContentLoaded', () => {
+            loadProducts();
+            initAboutCarousel();
+            autoplayInterval = setInterval(nextProduct, 5000);
+
+            // Header scroll effect
+            window.addEventListener('scroll', () => {
+                const header = document.getElementById('header');
+                if (window.scrollY > 20) {
+                    header.classList.add('shadow-md', 'bg-white/80');
+                    header.classList.remove('bg-transparent');
+                } else {
+                    header.classList.remove('shadow-md', 'bg-white/80');
+                    header.classList.add('bg-transparent');
+                }
+            });
+        });
+
+    </script>
+</body>
+
+</html>
